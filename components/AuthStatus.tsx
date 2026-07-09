@@ -36,7 +36,7 @@ export function AuthStatus() {
     </div>
   ) : (
     <Link href="/login" className="text-xs text-blue-700 underline">
-      Sign in to upload
+      Sign in
     </Link>
   );
 }

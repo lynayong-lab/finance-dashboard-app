@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { writeAuditLog } from "@/lib/audit";
 import { ParseError, parseExport } from "@/lib/parseExport";
+import { requireUser } from "@/lib/requireUser";
 
 const BUCKET = "finance-exports";
 
@@ -14,8 +15,10 @@ export async function POST(
   _req: NextRequest,
   { params }: { params: Promise<{ uploadId: string }> },
 ) {
+  const auth = await requireUser();
+  if ("response" in auth) return auth.response;
   const { uploadId } = await params;
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: upload } = await supabase
     .from("finance_uploads")
@@ -131,6 +134,7 @@ export async function POST(
       action: "parse_complete",
       object_type: "dashboard_snapshot",
       object_id: snapshot.id,
+      user_id: auth.user.id,
       old_value: prior && prior.length > 0 ? { previous_current: prior } : null,
       new_value: {
         upload_id: upload.id,
@@ -160,6 +164,7 @@ export async function POST(
       action: "parse_failed",
       object_type: "finance_upload",
       object_id: uploadId,
+      user_id: auth.user.id,
       new_value: { error: message },
     });
 

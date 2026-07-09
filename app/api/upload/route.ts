@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { writeAuditLog } from "@/lib/audit";
+import { requireUser } from "@/lib/requireUser";
 
 const BUCKET = "finance-exports";
 const ALLOWED = [".csv", ".xlsx", ".xls"];
 
 export async function POST(req: NextRequest) {
+  const auth = await requireUser();
+  if ("response" in auth) return auth.response;
   try {
     const form = await req.formData();
     const file = form.get("file");
@@ -28,7 +31,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const supabase = createAdminClient();
+    const supabase = await createClient();
 
     // Private bucket; create on first use so a fresh Supabase project works.
     const { data: buckets } = await supabase.storage.listBuckets();
@@ -53,6 +56,7 @@ export async function POST(req: NextRequest) {
     const { data: upload, error: insertError } = await supabase
       .from("finance_uploads")
       .insert({
+        user_id: auth.user.id,
         file_name: file.name,
         storage_path: storagePath,
         period_label: periodLabel,
@@ -71,6 +75,7 @@ export async function POST(req: NextRequest) {
       action: "upload_created",
       object_type: "finance_upload",
       object_id: upload.id,
+      user_id: auth.user.id,
       new_value: {
         file_name: file.name,
         period_label: periodLabel,

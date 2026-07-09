@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { writeAuditLog } from "@/lib/audit";
+import { requireUser } from "@/lib/requireUser";
 
 const VALID = ["red", "amber", "green"];
 
@@ -12,6 +13,8 @@ export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const auth = await requireUser();
+  if ("response" in auth) return auth.response;
   const { id } = await params;
   let body: { rag_status?: string; note?: string };
   try {
@@ -28,7 +31,7 @@ export async function POST(
     );
   }
 
-  const supabase = createAdminClient();
+  const supabase = await createClient();
   const { data: metric } = await supabase
     .from("team_metrics")
     .select("*")
@@ -61,6 +64,7 @@ export async function POST(
     action: "override_rag_status",
     object_type: "team_metric",
     object_id: id,
+    user_id: auth.user.id,
     old_value: {
       rag_status: metric.rag_status,
       rag_reason: metric.rag_reason,

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { writeAuditLog } from "@/lib/audit";
+import { requireUser } from "@/lib/requireUser";
 
 /**
  * set_current_snapshot triggered manually from the history page —
@@ -10,8 +11,10 @@ export async function POST(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const auth = await requireUser();
+  if ("response" in auth) return auth.response;
   const { id } = await params;
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: snapshot } = await supabase
     .from("dashboard_snapshots")
@@ -51,6 +54,7 @@ export async function POST(
     action: "set_current_snapshot",
     object_type: "dashboard_snapshot",
     object_id: id,
+    user_id: auth.user.id,
     old_value: prior && prior.length > 0 ? { previous_current: prior } : null,
     new_value: { period_label: snapshot.period_label },
   });

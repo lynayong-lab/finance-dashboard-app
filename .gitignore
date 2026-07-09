@@ -11,3 +11,6 @@ npm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*
+
+# local-only credential note (never commit)
+.uploader-credentials.local
