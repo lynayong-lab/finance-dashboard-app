@@ -1,0 +1,23 @@
+ACME Consulting Pte Ltd — MONTHLY FINANCE EXPORT (draft v2)
+Period,Jul 2025
+
+
+Summary
+METRIC,ACTUAL (S$),BUDGET (S$)
+EBIT,"S$512,000","S$500,000"
+Gross Profit %,40.1%,40.0%
+
+
+Team Performance (SGD)
+TEAM,FEE REVENUE (S$),GP%,EBIT ACTUAL,EBIT BUDGET
+Advisory,"S$448,000",42.3%,"S$165,000","S$150,000"
+Planning,"S$338,000",38.0%,"S$104,000","S$100,000"
+Engineering,"S$312,000",36.4%,"(S$108,000)","S$100,000"
+Sustainability,"S$192,000",43.0%,"S$121,000","S$118,000"
+Subtotal,"S$1,290,000",,,
+
+
+Project Watchlist
+PROJECT CODE,PROJECT NAME,TEAM,WIP VALUE (S$),WIP AGE DAYS,OVERRUN %,NOTES
+P-0042,Changi Masterplan,Engineering,"S$41,000",35,,Payment plan agreed — WIP unwinding
+P-0110,Punggol Digital District,Engineering,"S$67,000",71,,New flag — invoicing blocked on PO

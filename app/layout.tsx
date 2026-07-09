@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "vibe-stack-supabase",
-  description: "Next.js + Supabase starter",
+  title: "Finance Dashboard",
+  description:
+    "One-click finance export → executive dashboard: EBIT vs Budget, GP%, team RAG status.",
 };
 
 export default function RootLayout({
@@ -13,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="bg-[#f9f9f7] text-neutral-900 antialiased">{children}</body>
     </html>
   );
 }

@@ -1,0 +1,21 @@
+ACME Consulting Pte Ltd — Monthly Finance Export
+Period,Jun 2025
+
+SUMMARY
+Metric,Actual,Budget
+EBIT,468000,500000
+Gross Profit %,39.5,40.0
+
+TEAM PERFORMANCE
+Team,Fee Revenue,GP %,EBIT Actual,EBIT Budget
+Advisory,435000,41.8,158000,150000
+Planning,325000,37.2,97000,100000
+Engineering,295000,35.1,96000,100000
+Sustainability,185000,42.6,117000,118000
+TOTAL,1240000,,468000,468000
+
+PROJECT WATCHLIST
+Project Code,Project Name,Team,WIP Value,WIP Age Days,Overrun %,Notes
+P-0042,Changi Masterplan,Engineering,88000,68,,Still unbilled — escalated to client finance
+P-0091,Marina Bay Public Realm,Advisory,55000,58,,Invoice drafted awaiting PM sign-off
+P-0103,Tengah Eco-Town Advisory,Planning,,,22.0,Scope creep — fee variation pending

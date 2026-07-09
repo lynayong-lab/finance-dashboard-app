@@ -1,0 +1,21 @@
+ACME Consulting Pte Ltd — Monthly Finance Export
+Period,May 2025
+
+SUMMARY
+Metric,Actual,Budget
+EBIT,420000,500000
+Gross Profit %,38.2,40.0
+
+TEAM PERFORMANCE
+Team,Fee Revenue,GP %,EBIT Actual,EBIT Budget
+Advisory,420000,41.0,152000,150000
+Planning,310000,36.5,94000,100000
+Engineering,280000,33.8,82000,100000
+Sustainability,175000,42.1,92000,93000
+TOTAL,1185000,,420000,443000
+
+PROJECT WATCHLIST
+Project Code,Project Name,Team,WIP Value,WIP Age Days,Overrun %,Notes
+P-0042,Changi Masterplan,Engineering,95000,75,,Unbilled >75 days
+P-0078,Jurong Lake District Study,Planning,,,18.5,Fee overrun 18.5% above contract value
+P-0091,Marina Bay Public Realm,Advisory,52000,44,,WIP building — invoice due next month
