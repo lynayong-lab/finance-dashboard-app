@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getDashboardData } from "@/lib/data";
 import { DashboardView } from "@/components/DashboardView";
-import { UploadPanel } from "@/components/UploadPanel";
+import { UploadButton } from "@/components/UploadButton";
 import { AuthStatus } from "@/components/AuthStatus";
 import { fmtDate } from "@/lib/format";
 
@@ -34,7 +34,7 @@ export default async function Home() {
             >
               History
             </Link>
-            <UploadPanel />
+            <UploadButton />
           </div>
           <AuthStatus />
         </div>

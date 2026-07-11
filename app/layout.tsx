@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AppShell } from "@/components/AppShell";
 
 export const metadata: Metadata = {
   title: "Finance Dashboard",
@@ -14,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-[#f9f9f7] text-neutral-900 antialiased">{children}</body>
+      <body className="bg-[#f9f9f7] text-neutral-900 antialiased">
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }
