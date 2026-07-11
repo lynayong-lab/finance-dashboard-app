@@ -2,6 +2,7 @@ import Link from "next/link";
 import { listSnapshots } from "@/lib/data";
 import { fmtDateTime, fmtMoney, fmtPct } from "@/lib/format";
 import { DeleteSnapshotButton } from "@/components/DeleteSnapshotButton";
+import { RenameSnapshotButton } from "@/components/RenameSnapshotButton";
 
 export const dynamic = "force-dynamic";
 
@@ -70,6 +71,10 @@ export default async function HistoryPage() {
                   </span>
                 </div>
               </Link>
+              <RenameSnapshotButton
+                snapshotId={s.id}
+                periodLabel={s.period_label}
+              />
               <DeleteSnapshotButton
                 snapshotId={s.id}
                 periodLabel={s.period_label}
