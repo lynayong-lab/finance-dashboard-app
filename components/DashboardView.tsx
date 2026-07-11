@@ -124,8 +124,8 @@ export function DashboardView({ data }: { data: DashboardData }) {
                   {flags.map((f) => (
                     <tr key={f.id}>
                       <td className="py-2.5 pr-4">
-                        <span className="font-medium text-neutral-900">{f.project_name}</span>
-                        <span className="ml-2 text-xs text-neutral-400">{f.project_code}</span>
+                        <span className="block font-medium text-neutral-900">{f.project_name}</span>
+                        <span className="block text-xs text-neutral-400">{f.project_code}</span>
                       </td>
                       <td className="py-2.5 pr-4 text-neutral-700">{f.team_name}</td>
                       <td className="py-2.5 pr-4 text-neutral-700">
