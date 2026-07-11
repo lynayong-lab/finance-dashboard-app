@@ -41,16 +41,18 @@ export async function updateSession(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    // Lock-down phase (REQUIRE_AUTH=true): the dashboard is no longer public —
-    // viewing requires a signed-in session, mirroring the write gate in
-    // lib/requireUser.ts. In the demo phase (flag unset) everything stays open.
-    if (process.env.REQUIRE_AUTH === "true" && !user) {
+    // PROTECTED BY DEFAULT: an unauthenticated request to any page is
+    // redirected to /login before the page renders. This is server-side and
+    // unconditional — it does not depend on any env var being *set*. To
+    // deliberately reopen the public demo, set ALLOW_PUBLIC_DASHBOARD=true.
+    const publicDashboard = process.env.ALLOW_PUBLIC_DASHBOARD === "true";
+    if (!publicDashboard && !user) {
       const { pathname } = request.nextUrl;
-      const isPublic =
+      const isPublicPath =
         pathname === "/login" ||
         pathname.startsWith("/auth") || // auth callbacks
         pathname.startsWith("/api"); // API routes return their own JSON 401
-      if (!isPublic) {
+      if (!isPublicPath) {
         const loginUrl = request.nextUrl.clone();
         loginUrl.pathname = "/login";
         loginUrl.search = `?next=${encodeURIComponent(pathname)}`;
