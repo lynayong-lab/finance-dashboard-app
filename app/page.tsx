@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { getDashboardData } from "@/lib/data";
 import { DashboardView } from "@/components/DashboardView";
-import { UploadButton } from "@/components/UploadButton";
 import { AuthStatus } from "@/components/AuthStatus";
 import { fmtDate } from "@/lib/format";
 
@@ -27,15 +25,6 @@ export default async function Home() {
           )}
         </div>
         <div className="flex flex-col items-end gap-2">
-          <div className="flex items-center gap-4">
-            <Link
-              href="/history"
-              className="text-sm font-medium text-blue-700 hover:underline"
-            >
-              History
-            </Link>
-            <UploadButton />
-          </div>
           <AuthStatus />
         </div>
       </header>
