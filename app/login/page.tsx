@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -23,7 +22,9 @@ export default function LoginPage() {
       setError(error.message);
       return;
     }
-    router.push("/");
+    // Return to the page the user was gated from, if any.
+    const next = new URLSearchParams(window.location.search).get("next");
+    router.push(next && next.startsWith("/") ? next : "/");
     router.refresh();
   };
 
@@ -31,11 +32,7 @@ export default function LoginPage() {
     <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center px-4 py-12">
       <h1 className="text-2xl font-bold tracking-tight text-neutral-900">Sign in</h1>
       <p className="mt-1 text-sm text-neutral-500">
-        Uploading requires an account. The dashboard itself is public —{" "}
-        <Link href="/" className="text-blue-700 hover:underline">
-          view it without signing in
-        </Link>
-        .
+        Sign in to view and manage the finance dashboard.
       </p>
       <form onSubmit={signIn} className="mt-6 space-y-4">
         <label className="block text-sm font-medium text-neutral-700">

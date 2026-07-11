@@ -37,7 +37,27 @@ export async function updateSession(request: NextRequest) {
     });
 
     // Refresh session so it doesn't expire while user is active
-    await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    // Lock-down phase (REQUIRE_AUTH=true): the dashboard is no longer public —
+    // viewing requires a signed-in session, mirroring the write gate in
+    // lib/requireUser.ts. In the demo phase (flag unset) everything stays open.
+    if (process.env.REQUIRE_AUTH === "true" && !user) {
+      const { pathname } = request.nextUrl;
+      const isPublic =
+        pathname === "/login" ||
+        pathname.startsWith("/auth") || // auth callbacks
+        pathname.startsWith("/api"); // API routes return their own JSON 401
+      if (!isPublic) {
+        const loginUrl = request.nextUrl.clone();
+        loginUrl.pathname = "/login";
+        loginUrl.search = `?next=${encodeURIComponent(pathname)}`;
+        return NextResponse.redirect(loginUrl);
+      }
+    }
+
     return response;
   } catch {
     // Never let an auth hiccup crash the entire edge middleware
