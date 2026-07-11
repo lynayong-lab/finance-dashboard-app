@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { listSnapshots } from "@/lib/data";
 import { fmtDateTime, fmtMoney, fmtPct } from "@/lib/format";
+import { DeleteSnapshotButton } from "@/components/DeleteSnapshotButton";
 
 export const dynamic = "force-dynamic";
 
@@ -30,10 +31,10 @@ export default async function HistoryPage() {
       ) : (
         <ul className="space-y-3">
           {snapshots.map((s) => (
-            <li key={s.id}>
+            <li key={s.id} className="flex flex-wrap items-center gap-2">
               <Link
                 href={`/history/${s.id}`}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition hover:border-blue-300 hover:shadow"
+                className="flex min-w-0 flex-1 flex-wrap items-center justify-between gap-3 rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition hover:border-blue-300 hover:shadow"
               >
                 <div>
                   <p className="font-semibold text-neutral-900">
@@ -69,6 +70,11 @@ export default async function HistoryPage() {
                   </span>
                 </div>
               </Link>
+              <DeleteSnapshotButton
+                snapshotId={s.id}
+                periodLabel={s.period_label}
+                disabled={s.is_current}
+              />
             </li>
           ))}
         </ul>
