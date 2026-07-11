@@ -105,45 +105,96 @@ export function DashboardView({ data }: { data: DashboardData }) {
             No projects flagged this period. 🎉
           </p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-neutral-200 text-left text-xs uppercase tracking-wide text-neutral-500">
-                  <th className="py-2 pr-4 font-medium">Project</th>
-                  <th className="py-2 pr-4 font-medium">Team</th>
-                  <th className="py-2 pr-4 font-medium">Flag</th>
-                  <th className="py-2 pr-4 font-medium text-right">WIP</th>
-                  <th className="py-2 pr-4 font-medium text-right">Overrun</th>
-                  <th className="py-2 pr-4 font-medium">Status</th>
-                  <th className="py-2 font-medium">Notes</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-100">
-                {flags.map((f) => (
-                  <tr key={f.id}>
-                    <td className="py-2.5 pr-4">
-                      <span className="font-medium text-neutral-900">{f.project_name}</span>
-                      <span className="ml-2 text-xs text-neutral-400">{f.project_code}</span>
-                    </td>
-                    <td className="py-2.5 pr-4 text-neutral-700">{f.team_name}</td>
-                    <td className="py-2.5 pr-4 text-neutral-700">
-                      {FLAG_LABELS[f.flag_type] ?? f.flag_type}
-                    </td>
-                    <td className="py-2.5 pr-4 text-right tabular-nums text-neutral-700">
-                      {f.wip_value !== null ? fmtMoney(f.wip_value) : "—"}
-                    </td>
-                    <td className="py-2.5 pr-4 text-right tabular-nums text-neutral-700">
-                      {f.overrun_pct !== null ? fmtPct(f.overrun_pct) : "—"}
-                    </td>
-                    <td className="py-2.5 pr-4">
-                      <RagBadge status={f.rag_status} size="sm" />
-                    </td>
-                    <td className="py-2.5 text-neutral-500">{f.notes ?? "—"}</td>
+          <>
+            {/* Desktop / tablet: table (unchanged) */}
+            <div className="hidden overflow-x-auto sm:block">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-neutral-200 text-left text-xs uppercase tracking-wide text-neutral-500">
+                    <th className="py-2 pr-4 font-medium">Project</th>
+                    <th className="py-2 pr-4 font-medium">Team</th>
+                    <th className="py-2 pr-4 font-medium">Flag</th>
+                    <th className="py-2 pr-4 font-medium text-right">WIP</th>
+                    <th className="py-2 pr-4 font-medium text-right">Overrun</th>
+                    <th className="py-2 pr-4 font-medium">Status</th>
+                    <th className="py-2 font-medium">Notes</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-neutral-100">
+                  {flags.map((f) => (
+                    <tr key={f.id}>
+                      <td className="py-2.5 pr-4">
+                        <span className="font-medium text-neutral-900">{f.project_name}</span>
+                        <span className="ml-2 text-xs text-neutral-400">{f.project_code}</span>
+                      </td>
+                      <td className="py-2.5 pr-4 text-neutral-700">{f.team_name}</td>
+                      <td className="py-2.5 pr-4 text-neutral-700">
+                        {FLAG_LABELS[f.flag_type] ?? f.flag_type}
+                      </td>
+                      <td className="py-2.5 pr-4 text-right tabular-nums text-neutral-700">
+                        {f.wip_value !== null ? fmtMoney(f.wip_value) : "—"}
+                      </td>
+                      <td className="py-2.5 pr-4 text-right tabular-nums text-neutral-700">
+                        {f.overrun_pct !== null ? fmtPct(f.overrun_pct) : "—"}
+                      </td>
+                      <td className="py-2.5 pr-4">
+                        <RagBadge status={f.rag_status} size="sm" />
+                      </td>
+                      <td className="py-2.5 text-neutral-500">{f.notes ?? "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile: one card per flagged project — no horizontal scroll */}
+            <ul className="space-y-3 sm:hidden">
+              {flags.map((f) => (
+                <li
+                  key={f.id}
+                  className="rounded-lg border border-neutral-200 p-3"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="font-medium text-neutral-900">{f.project_name}</p>
+                      <p className="text-xs text-neutral-400">{f.project_code}</p>
+                    </div>
+                    <RagBadge status={f.rag_status} size="sm" />
+                  </div>
+                  <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                    <div>
+                      <dt className="text-xs uppercase tracking-wide text-neutral-500">Team</dt>
+                      <dd className="text-neutral-700">{f.team_name}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs uppercase tracking-wide text-neutral-500">Flag</dt>
+                      <dd className="text-neutral-700">
+                        {FLAG_LABELS[f.flag_type] ?? f.flag_type}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs uppercase tracking-wide text-neutral-500">WIP</dt>
+                      <dd className="tabular-nums text-neutral-700">
+                        {f.wip_value !== null ? fmtMoney(f.wip_value) : "—"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs uppercase tracking-wide text-neutral-500">Overrun</dt>
+                      <dd className="tabular-nums text-neutral-700">
+                        {f.overrun_pct !== null ? fmtPct(f.overrun_pct) : "—"}
+                      </dd>
+                    </div>
+                  </dl>
+                  {f.notes && (
+                    <dl className="mt-2">
+                      <dt className="text-xs uppercase tracking-wide text-neutral-500">Notes</dt>
+                      <dd className="text-sm text-neutral-500">{f.notes}</dd>
+                    </dl>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </>
         )}
       </div>
     </div>
