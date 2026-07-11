@@ -21,7 +21,7 @@ export function DashboardView({ data }: { data: DashboardData }) {
       {/* Headline stat tiles */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-neutral-500">EBIT — Actual</p>
+          <p className="text-sm uppercase tracking-wide text-neutral-500">EBIT — Actual</p>
           <p className="mt-1 text-3xl font-semibold tracking-tight text-neutral-900">
             {fmtMoney(snapshot.ebit_actual)}
           </p>
@@ -30,7 +30,7 @@ export function DashboardView({ data }: { data: DashboardData }) {
           </p>
         </div>
         <div className="rounded-xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-neutral-500">EBIT — Budget</p>
+          <p className="text-sm uppercase tracking-wide text-neutral-500">EBIT — Budget</p>
           <p className="mt-1 text-3xl font-semibold tracking-tight text-neutral-900">
             {fmtMoney(snapshot.ebit_budget)}
           </p>
@@ -39,7 +39,7 @@ export function DashboardView({ data }: { data: DashboardData }) {
           </p>
         </div>
         <div className="rounded-xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-neutral-500">EBIT Variance</p>
+          <p className="text-sm uppercase tracking-wide text-neutral-500">EBIT Variance</p>
           <p className={`mt-1 text-3xl font-semibold tracking-tight ${varianceTone}`}>
             {fmtMoney(snapshot.ebit_variance)}
           </p>
@@ -48,7 +48,7 @@ export function DashboardView({ data }: { data: DashboardData }) {
           </p>
         </div>
         <div className="rounded-xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-neutral-500">Gross Profit</p>
+          <p className="text-sm uppercase tracking-wide text-neutral-500">Gross Profit</p>
           <p className="mt-1 text-3xl font-semibold tracking-tight text-neutral-900">
             {fmtPct(snapshot.gross_profit_pct)}
           </p>
